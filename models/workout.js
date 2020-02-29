@@ -8,12 +8,42 @@ const workoutSchema = new Schema({
     default: Date.now
   },
   exercises: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: "Exercise"
+    {
+      type: {
+        type: String,
+      },
+      name: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      //Resistance Values
+      weight: {
+        type: Number
+      },
+      reps: {
+        type: Number
+      },
+      sets: {
+        type: Number
+      },
+      //Cardio Value
+      distance: {
+        type: Number
       }
+    }
   ]
 });
+
+workoutSchema.methods.durationTotaler = function() {
+  var total
+  for (i of this.exercises) {
+    total += i.duration
+  }
+  this.totalDuration = total
+  return totalDuration
+}
 
 const Workout = mongoose.model("Workout", workoutSchema);
 

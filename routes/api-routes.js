@@ -1,18 +1,49 @@
 module.exports = function(app) {
+    const db = require("../models");
+
     app.get("/api/workouts", function(req, res){
-        console.log("get")
+        db.Workout.find({}).sort({day: 1})
+        .then(dbWorkout => {
+            // dbWorkout.durationTotaler()
+            // console.log(dbWorkout.durationTotaler)
+          res.json(dbWorkout);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    
     })
 
     app.put("/api/workouts/:id", function(req, res){
-        console.log("put")
-        console.log(req.params.id)
+        console.log(req.query.id)
+        db.Workout.findOneAndUpdate({ _id: req.query.id }, { $push: { exercises: req.body } }, { new: true })
+        .then(dbWorkout => {
+          res.json(dbWorkout);
+        })
+        .catch(err => {
+          res.json(err);
+        });
     })
 
     app.post("/api/workouts", function(req, res){
-        console.log("post")
+    db.Workout.create({
+        day: Date.now,
+        exercises: []
+    }).then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.json(err);
+      });
     })
 
     app.get("/api/workouts/range", function(req, res){
-        console.log("other get")
+        db.Workout.find({}).sort({day: -1})
+        .then(dbWorkout => {
+          res.json(dbWorkout);
+        })
+        .catch(err => {
+          res.json(err);
+        });
     })
 }
