@@ -7,6 +7,10 @@ const workoutSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  totalDuration: {
+    type: Date,
+    default: Date.now
+  },
   exercises: [
     {
       type: {
@@ -36,14 +40,24 @@ const workoutSchema = new Schema({
   ]
 });
 
-workoutSchema.methods.durationTotaler = function() {
-  var total
-  for (i of this.exercises) {
-    total += i.duration
-  }
-  this.totalDuration = total
-  return totalDuration
-}
+//My custom methods refuse to work
+
+// workoutSchema.virtual("totalDuration").get(function() {
+//   let total = 0
+//   for (i of this.exercises) {
+//     total += i.duration
+//   }
+//   return total;
+// });
+
+// workoutSchema.method.durationTotaler = function() {
+//   let total
+//   for (i of this.exercises) {
+//     total += i.duration
+//   }
+//   this.totalDuration = total
+//   return totalDuration
+// }
 
 const Workout = mongoose.model("Workout", workoutSchema);
 

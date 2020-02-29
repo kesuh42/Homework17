@@ -4,8 +4,6 @@ module.exports = function(app) {
     app.get("/api/workouts", function(req, res){
         db.Workout.find({}).sort({day: 1})
         .then(dbWorkout => {
-            // dbWorkout.durationTotaler()
-            // console.log(dbWorkout.durationTotaler)
           res.json(dbWorkout);
         })
         .catch(err => {
